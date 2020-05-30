@@ -1,4 +1,4 @@
-module awesome_libs
+module github.com/ssst0n3/awesome_libs
 
 go 1.14
 
