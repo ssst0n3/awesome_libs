@@ -57,3 +57,22 @@ func ValueByPtr(modelPtr interface{}) reflect.Value {
 	MustPointer(modelPtr)
 	return reflect.ValueOf(modelPtr).Elem()
 }
+
+/*
+!!!reflect attention, may cause panic!!!
+*/
+func FieldByJsonTag(v reflect.Value, jsonTag string) (reflect.Value, bool) {
+	for i := 0; i < v.Type().NumField(); i++ {
+		if v.Type().Field(i).Tag.Get("json") == jsonTag {
+			return v.Field(i), true
+		}
+		if v.Field(i).Kind() == reflect.Struct {
+			if value, find := FieldByJsonTag(v.Field(i), jsonTag); find {
+				return value, find
+			} else {
+				continue
+			}
+		}
+	}
+	return reflect.Value{}, false
+}

@@ -75,3 +75,12 @@ func TestValueByPtr(t *testing.T) {
 		})
 	})
 }
+
+func TestFieldByJsonTag(t *testing.T) {
+	field, find := FieldByJsonTag(
+		Value(struct {Name string `json:"name"`}{Name: "john"}),
+		"name",
+	)
+	assert.Equal(t, true, find)
+	assert.Equal(t, Value("john").Interface(), field.Interface())
+}
