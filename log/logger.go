@@ -1,4 +1,4 @@
-package awesome_libs
+package log
 
 import (
 	"github.com/sirupsen/logrus"
