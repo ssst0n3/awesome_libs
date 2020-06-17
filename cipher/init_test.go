@@ -1,13 +1,16 @@
 package cipher
 
 import (
+	"errors"
 	error2 "github.com/ssst0n3/awesome_libs/error"
-	"log"
 	"os"
 	"strings"
 )
 
-const ProjectName = "awesome_libs"
+const (
+	ProjectName = "awesome_libs"
+	PanicIndexMustBePositiveInt = "index must be bigger than -1"
+)
 
 var ProjectDir string
 var PathCipherKeyTest string
@@ -22,7 +25,7 @@ func GetProjectDir() {
 	error2.CheckErr(err)
 	index := strings.Index(dir, ProjectName)
 	if index < 0 {
-		log.Fatal("index must be bigger than -1!")
+		error2.CheckFatal(errors.New(PanicIndexMustBePositiveInt))
 	}
 	ProjectDir = dir[:index+len(ProjectName)] + "/"
 }
