@@ -1,4 +1,4 @@
-package common
+package cipher
 
 import (
 	error2 "github.com/ssst0n3/awesome_libs/error"

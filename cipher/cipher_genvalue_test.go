@@ -1,7 +1,7 @@
 /*
 just for encrypting and decrypting manually
 */
-package common
+package cipher
 
 import (
 	"encoding/hex"
