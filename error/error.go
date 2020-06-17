@@ -16,7 +16,3 @@ func CheckFatal(err error) {
 		log.Logger.Fatalf("%+v\n", errors.Errorf(err.Error()))
 	}
 }
-
-func CheckPanic(args ...interface{}) {
-	log.Logger.Panic(args...)
-}
