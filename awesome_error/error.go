@@ -1,4 +1,4 @@
-package error
+package awesome_error
 
 import (
 	"github.com/pkg/errors"

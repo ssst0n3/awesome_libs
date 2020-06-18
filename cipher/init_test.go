@@ -2,13 +2,13 @@ package cipher
 
 import (
 	"errors"
-	error2 "github.com/ssst0n3/awesome_libs/error"
+	"github.com/ssst0n3/awesome_libs/awesome_error"
 	"os"
 	"strings"
 )
 
 const (
-	ProjectName = "awesome_libs"
+	ProjectName                 = "awesome_libs"
 	PanicIndexMustBePositiveInt = "index must be bigger than -1"
 )
 
@@ -22,10 +22,10 @@ func init() {
 
 func GetProjectDir() {
 	dir, err := os.Getwd()
-	error2.CheckErr(err)
+	awesome_error.CheckErr(err)
 	index := strings.Index(dir, ProjectName)
 	if index < 0 {
-		error2.CheckFatal(errors.New(PanicIndexMustBePositiveInt))
+		awesome_error.CheckFatal(errors.New(PanicIndexMustBePositiveInt))
 	}
 	ProjectDir = dir[:index+len(ProjectName)] + "/"
 }

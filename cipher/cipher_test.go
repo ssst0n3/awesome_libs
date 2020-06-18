@@ -2,7 +2,7 @@ package cipher
 
 import (
 	"encoding/hex"
-	awesomeError "github.com/ssst0n3/awesome_libs/error"
+	"github.com/ssst0n3/awesome_libs/awesome_error"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"strings"
@@ -18,14 +18,14 @@ func TestCipher_SetKey(t *testing.T) {
 
 func TestCipher_GetKey(t *testing.T) {
 	cipherKeyHex, err := ioutil.ReadFile(PathCipherKeyTest)
-	awesomeError.CheckErr(err)
+	awesome_error.CheckErr(err)
 	assert.Equal(t, nil, err)
 	cipherKey, err := hex.DecodeString(strings.TrimSpace(string(cipherKeyHex)))
-	awesomeError.CheckErr(err)
+	awesome_error.CheckErr(err)
 	assert.Equal(t, nil, err)
 	cipher := Cipher{}
 	err = cipher.GetKey(PathCipherKeyTest)
-	awesomeError.CheckErr(err)
+	awesome_error.CheckErr(err)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, cipherKey, cipher.key)
 }

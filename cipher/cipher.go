@@ -5,7 +5,7 @@ import (
 	"crypto/cipher"
 	"crypto/rand"
 	"encoding/hex"
-	awesomeError "github.com/ssst0n3/awesome_libs/error"
+	"github.com/ssst0n3/awesome_libs/awesome_error"
 	"io"
 	"io/ioutil"
 	"strings"
@@ -32,12 +32,12 @@ func (c *Cipher) SetKey(key []byte) {
 func (c *Cipher) GetKey(keyPath string) error {
 	cipherKeyHex, err := ioutil.ReadFile(keyPath)
 	if err != nil {
-		awesomeError.CheckErr(err)
+		awesome_error.CheckErr(err)
 		return err
 	}
 	cipherKey, err := hex.DecodeString(strings.TrimSpace(string(cipherKeyHex)))
 	if err != nil {
-		awesomeError.CheckErr(err)
+		awesome_error.CheckErr(err)
 		return err
 	}
 
@@ -51,19 +51,19 @@ func (c *Cipher) Encrypt(pt string) (string, error) {
 	nonce := make([]byte, 12)
 	_, err := io.ReadFull(rand.Reader, nonce)
 	if err != nil {
-		awesomeError.CheckErr(err)
+		awesome_error.CheckErr(err)
 		return "", err
 	}
 
 	block, err := aes.NewCipher(c.key)
 	if err != nil {
-		awesomeError.CheckErr(err)
+		awesome_error.CheckErr(err)
 		return "", err
 	}
 
 	aesGcm, err := cipher.NewGCM(block)
 	if err != nil {
-		awesomeError.CheckErr(err)
+		awesome_error.CheckErr(err)
 		return "", err
 	}
 
@@ -75,25 +75,25 @@ func (c *Cipher) Decrypt(ct string) (string, error) {
 	c.MustKeyExists()
 	cipherText, err := hex.DecodeString(ct)
 	if err != nil {
-		awesomeError.CheckErr(err)
+		awesome_error.CheckErr(err)
 		return "", err
 	}
 	nonce := cipherText[:12]
 	block, err := aes.NewCipher(c.key)
 	if err != nil {
-		awesomeError.CheckErr(err)
+		awesome_error.CheckErr(err)
 		return "", err
 	}
 
 	aesGcm, err := cipher.NewGCM(block)
 	if err != nil {
-		awesomeError.CheckErr(err)
+		awesome_error.CheckErr(err)
 		return "", err
 	}
 
 	plainText, err := aesGcm.Open(nil, nonce, cipherText[12:], nil)
 	if err != nil {
-		awesomeError.CheckErr(err)
+		awesome_error.CheckErr(err)
 		return "", err
 	}
 
