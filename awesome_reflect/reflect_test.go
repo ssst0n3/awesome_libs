@@ -1,4 +1,4 @@
-package reflect
+package awesome_reflect
 
 import (
 	"github.com/ssst0n3/awesome_libs/test_data"
