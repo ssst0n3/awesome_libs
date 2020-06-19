@@ -7,12 +7,6 @@ import (
 
 func TestIn(t *testing.T) {
 	item := 1
-	slice := []interface{}{1, 2, 3}
+	slice := []int{1, 2, 3}
 	assert.Equal(t, true, In(item, slice))
-}
-
-func TestInInt(t *testing.T) {
-	item := 1
-	slice := []int{1,2,3}
-	assert.Equal(t, true, InInt(item, slice))
 }

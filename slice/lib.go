@@ -1,21 +1,23 @@
 package slice
 
-func In(item interface{}, slice []interface{}) bool {
-	result := false
-	for _, v := range slice {
-		if item == v {
-			result = true
-		}
-	}
-	return result
-}
+import (
+	"reflect"
+)
 
-func InInt(item int, slice []int) bool {
+const PanicTheSecondParameterMustBeSlice = "The Second Parameter Must Be Slice"
+
+func In(item interface{}, slice interface{}) bool {
 	result := false
-	for _, v := range slice {
-		if item == v {
-			result = true
+	value := reflect.ValueOf(slice)
+	if value.Kind() == reflect.Slice {
+		for i := 0; i < value.Len(); i++ {
+			if item == value.Index(i).Interface() {
+				result = true
+				break
+			}
 		}
+	} else {
+		panic(PanicTheSecondParameterMustBeSlice)
 	}
 	return result
 }
