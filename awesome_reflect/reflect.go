@@ -64,8 +64,6 @@ func ValueByPtr(modelPtr interface{}) reflect.Value {
 */
 func FieldByJsonTag(v reflect.Value, jsonTag string) (reflect.Value, bool) {
 	switch v.Kind() {
-	case reflect.Slice:
-		return FieldByJsonTag(v.Index(0), jsonTag)
 	case reflect.Struct:
 		for i := 0; i < v.Type().NumField(); i++ {
 			if v.Type().Field(i).Tag.Get("json") == jsonTag {
