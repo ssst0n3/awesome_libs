@@ -1,6 +1,7 @@
 package awesome_reflect
 
 import (
+	"fmt"
 	"reflect"
 )
 
@@ -62,17 +63,24 @@ func ValueByPtr(modelPtr interface{}) reflect.Value {
 !!!reflect attention, may cause panic!!!
 */
 func FieldByJsonTag(v reflect.Value, jsonTag string) (reflect.Value, bool) {
-	for i := 0; i < v.Type().NumField(); i++ {
-		if v.Type().Field(i).Tag.Get("json") == jsonTag {
-			return v.Field(i), true
-		}
-		if v.Field(i).Kind() == reflect.Struct {
-			if value, find := FieldByJsonTag(v.Field(i), jsonTag); find {
-				return value, find
-			} else {
-				continue
+	switch v.Kind() {
+	case reflect.Slice:
+		return FieldByJsonTag(v.Index(0), jsonTag)
+	case reflect.Struct:
+		for i := 0; i < v.Type().NumField(); i++ {
+			if v.Type().Field(i).Tag.Get("json") == jsonTag {
+				return v.Field(i), true
+			}
+			if v.Field(i).Kind() == reflect.Struct {
+				if value, find := FieldByJsonTag(v.Field(i), jsonTag); find {
+					return value, find
+				} else {
+					continue
+				}
 			}
 		}
+	default:
+		panic(fmt.Sprintf("Not support type: %s", v.Kind().String()))
 	}
 	return reflect.Value{}, false
 }
