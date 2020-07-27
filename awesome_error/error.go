@@ -11,6 +11,12 @@ func CheckErr(err error) {
 	}
 }
 
+func CheckWarning(err error) {
+	if err != nil {
+		log.Logger.Warnf("%+v\n", errors.Errorf(err.Error()))
+	}
+}
+
 func CheckFatal(err error) {
 	if err != nil {
 		log.Logger.Fatalf("%+v\n", errors.Errorf(err.Error()))
