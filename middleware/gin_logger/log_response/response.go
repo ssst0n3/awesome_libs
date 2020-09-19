@@ -1,4 +1,4 @@
-package gin_logger
+package log_response
 
 import (
 	"bufio"
