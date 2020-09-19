@@ -3,10 +3,9 @@ package gin
 import (
 	"bufio"
 	"bytes"
-	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/ssst0n3/awesome_libs/awesome_error"
 	"github.com/ssst0n3/awesome_libs/middleware/http_traffic/internal/writer"
-	"net/http/httputil"
 )
 
 type bufferedWriter struct {
@@ -22,25 +21,25 @@ func (g *bufferedWriter) Write(data []byte) (int, error) {
 
 func (g Gin) LogResponse(write writer.Wrapper) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		//w := bufio.NewWriter(c.Writer)
-		//buff := bytes.Buffer{}
-		//newWriter := &bufferedWriter{c.Writer, w, buff}
-		//
-		//c.Writer = newWriter
+		w := bufio.NewWriter(c.Writer)
+		buff := bytes.Buffer{}
+		newWriter := &bufferedWriter{c.Writer, w, buff}
+
+		c.Writer = newWriter
 
 		// You have to manually flush the buffer at the end
 		defer func() {
 
-			responseDump, err := httputil.DumpResponse(c.Request.Response, true)
-			if err != nil {
-				fmt.Println(err)
-			}
-			fmt.Println(string(responseDump))
-
-			//if _, err := write.Write(newWriter.Buffer.Bytes()); err != nil {
-			//	awesome_error.CheckErr(err)
+			//requestDump, err := httputil.DumpResponse(c.Request.Response, true)
+			//if err != nil {
+			//	fmt.Println(err)
 			//}
-			//awesome_error.CheckWarning(w.Flush())
+			//fmt.Println(string(requestDump))
+
+			if _, err := write.Write(newWriter.Buffer.Bytes()); err != nil {
+				awesome_error.CheckErr(err)
+			}
+			awesome_error.CheckWarning(w.Flush())
 		}()
 
 		// Run the execution chain
