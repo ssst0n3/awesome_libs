@@ -3,9 +3,11 @@ package gin
 import (
 	"bufio"
 	"bytes"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/ssst0n3/awesome_libs/awesome_error"
 	"github.com/ssst0n3/awesome_libs/middleware/http_traffic/internal/writer"
+	"net/http/httputil"
 )
 
 type bufferedWriter struct {
@@ -29,6 +31,13 @@ func (g Gin) LogResponse(write writer.Wrapper) gin.HandlerFunc {
 
 		// You have to manually flush the buffer at the end
 		defer func() {
+
+			responseDump, err := httputil.DumpResponse(c.Request.Response, true)
+			if err != nil {
+				fmt.Println(err)
+			}
+			fmt.Println(string(responseDump))
+
 			if _, err := write.Write(newWriter.Buffer.Bytes()); err != nil {
 				awesome_error.CheckErr(err)
 			}
