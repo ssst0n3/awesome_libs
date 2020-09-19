@@ -1,11 +1,11 @@
-package log_response
+package gin
 
 import (
 	"bufio"
 	"bytes"
 	"github.com/gin-gonic/gin"
 	"github.com/ssst0n3/awesome_libs/awesome_error"
-	"github.com/ssst0n3/awesome_libs/log"
+	"github.com/ssst0n3/awesome_libs/middleware/http_traffic/internal/writer"
 )
 
 type bufferedWriter struct {
@@ -19,7 +19,7 @@ func (g *bufferedWriter) Write(data []byte) (int, error) {
 	return g.out.Write(data)
 }
 
-func LogResponse() gin.HandlerFunc {
+func (g Gin) LogResponse(write writer.Wrapper) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		w := bufio.NewWriter(c.Writer)
 		buff := bytes.Buffer{}
@@ -29,7 +29,9 @@ func LogResponse() gin.HandlerFunc {
 
 		// You have to manually flush the buffer at the end
 		defer func() {
-			log.Logger.Info(newWriter.Buffer.String())
+			if _, err := write.Write(newWriter.Buffer.Bytes()); err != nil {
+				awesome_error.CheckErr(err)
+			}
 			awesome_error.CheckWarning(w.Flush())
 		}()
 
