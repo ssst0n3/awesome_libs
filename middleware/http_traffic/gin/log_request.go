@@ -21,6 +21,10 @@ func (g Gin) LogRequest(write writer.Wrapper) gin.HandlerFunc {
 		} else {
 			context.Request.Body = ioutil.NopCloser(bytes.NewReader(body))
 
+			extra := fmt.Sprintf("%s", context.ClientIP())
+			if _, err := write.Write([]byte(extra)); err != nil {
+				awesome_error.CheckErr(err)
+			}
 			requestDump, err := httputil.DumpRequest(context.Request, true)
 			if err != nil {
 				fmt.Println(err)
