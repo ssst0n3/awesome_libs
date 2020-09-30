@@ -8,7 +8,7 @@
 - [x] python like format
 
 ## format
-```
+```go
 import "github.com/ssst0n3/awesome_libs"
 
 func Format()  {
