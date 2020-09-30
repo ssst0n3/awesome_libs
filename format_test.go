@@ -7,7 +7,7 @@ import (
 
 func TestFormat(t *testing.T) {
 	msg := Format(
-		"Hello {{.name}}", Dict{
+		"Hello {.name}", Dict{
 			"name": "awesome",
 		},
 	)
