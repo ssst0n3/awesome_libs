@@ -5,6 +5,12 @@ import (
 	"github.com/ssst0n3/awesome_libs/log"
 )
 
+func CheckDebug(err error) {
+	if err != nil {
+		log.Logger.Debugf("%+v\n", errors.Errorf(err.Error()))
+	}
+}
+
 func CheckErr(err error) {
 	if err != nil {
 		log.Logger.Errorf("%+v\n", errors.Errorf(err.Error()))
