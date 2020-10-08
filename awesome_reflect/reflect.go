@@ -82,3 +82,7 @@ func FieldByJsonTag(v reflect.Value, jsonTag string) (reflect.Value, bool) {
 	}
 	return reflect.Value{}, false
 }
+
+func EmptyPointerOfModel(model interface{}) interface{} {
+	return reflect.New(reflect.TypeOf(model)).Interface()
+}
