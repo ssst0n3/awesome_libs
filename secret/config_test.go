@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestCheckValid(t *testing.T) {
+func TestCheckDirSecretValid(t *testing.T) {
 	assert.Equal(t, true, CheckDirSecretValid("/tmp"))
 	assert.Equal(t, false, CheckDirSecretValid("/tmp/not_exists"))
 }
@@ -29,17 +29,24 @@ func TestCreateDefaultSecretDir(t *testing.T) {
 		dirSecret := CreateDefaultSecretDir(dir)
 		assert.Equal(t, dir, dirSecret)
 	}
-	t.Run("process cwd", func(t *testing.T) {
-		assert.NoError(t, os.Remove(consts.PreferDirSecretProcess))
+	t.Run("empty", func(t *testing.T) {
 		dirSecret := CreateDefaultSecretDir("")
-		assert.Equal(t, consts.PreferDirSecretProcess, dirSecret)
+		assert.Equal(t, "", dirSecret)
 	})
 }
 
 func TestGetDirSecret(t *testing.T) {
-	t.Run("process cwd", func(t *testing.T) {
-		assert.NoError(t, os.Remove(consts.PreferDirSecretProcess))
+	t.Run("empty", func(t *testing.T) {
+		os.Clearenv()
 		dirSecret := GetDirSecret()
-		assert.Equal(t, consts.PreferDirSecretProcess, dirSecret)
+		assert.Equal(t, ".", dirSecret)
+	})
+	t.Run("not exists", func(t *testing.T) {
+		os.Clearenv()
+		dir := "secret"
+		assert.NoError(t, os.Setenv(consts.EnvDirSecret, dir))
+		dirSecret := GetDirSecret()
+		assert.Equal(t, dir, dirSecret)
+		assert.NoError(t, os.Remove(dir))
 	})
 }

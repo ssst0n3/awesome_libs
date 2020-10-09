@@ -38,9 +38,9 @@ func GetDirSecretFromEnv() (dirSecret string, err error) {
 Please make sure the security of variable prefer by yourself
 */
 func CreateDefaultSecretDir(prefer string) (dirSecret string) {
-	{
-		/* create dir assigned by environment */
-		if len(prefer) > 0 {
+	if len(prefer) > 0 {
+		{
+			/* create dir assigned by environment */
 			dirSecret = prefer
 			if err := os.MkdirAll(dirSecret, 0755); err != nil {
 				awesome_error.CheckWarning(err)
@@ -48,26 +48,34 @@ func CreateDefaultSecretDir(prefer string) (dirSecret string) {
 				return
 			}
 		}
-	}
-	{
-		/* create dir under root */
-		dirSecret = consts.PreferDirSecretRoot
-		if err := os.MkdirAll(dirSecret, 0755); err != nil {
-			awesome_error.CheckWarning(err)
-		} else {
-			return
+		{
+			/* create dir under root */
+			dirSecret = consts.PreferDirSecretRoot
+			if err := os.MkdirAll(dirSecret, 0755); err != nil {
+				awesome_error.CheckWarning(err)
+			} else {
+				return
+			}
+		}
+		{
+			/* create dir under process dir */
+			dirSecret = consts.PreferDirSecretProcess
+			if err := os.MkdirAll(dirSecret, 0755); err != nil {
+				awesome_error.CheckFatal(err)
+			} else {
+				return
+			}
+		}
+		{
+			/* create dir under process dir */
+			dirSecret = consts.PreferDirSecretTmp
+			if err := os.MkdirAll(dirSecret, 0755); err != nil {
+				awesome_error.CheckFatal(err)
+			} else {
+				return
+			}
 		}
 	}
-	{
-		/* create dir under process dir */
-		dirSecret = consts.PreferDirSecretProcess
-		if err := os.MkdirAll(dirSecret, 0755); err != nil {
-			awesome_error.CheckFatal(err)
-		} else {
-			return
-		}
-	}
-
 	// TODO: is there need to get absolute path of dirSecret
 	return
 }
@@ -76,6 +84,9 @@ func GetDirSecret() (dirSecret string) {
 	var err error
 	if dirSecret, err = GetDirSecretFromEnv(); err != nil {
 		dirSecret = CreateDefaultSecretDir(dirSecret)
+	}
+	if len(dirSecret) == 0 {
+		dirSecret = consts.PreferDirSecretCwd
 	}
 	return
 }
