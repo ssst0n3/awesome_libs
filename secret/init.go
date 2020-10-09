@@ -1,5 +1,9 @@
 package secret
 
-func init() {
+func InitDirSecret() {
 	DirSecret = GetDirSecret()
+}
+
+func init() {
+	InitDirSecret()
 }
