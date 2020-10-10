@@ -13,7 +13,7 @@ const (
 	HintInitData            = "Hint: you need init your data, because the CommonCipher's key is init key."
 )
 
-func InitCipher() {
+func Init() {
 	secret.InitDirSecret()
 	var err error
 	CommonCipher.key, IsInitKey, err = secret.LoadKey(FilenameCommonCipherKey)
@@ -25,6 +25,6 @@ func InitCipher() {
 
 func init() {
 	if len(os.Getenv(consts.EnvDirSecret)) > 0 {
-		InitCipher()
+		Init()
 	}
 }
