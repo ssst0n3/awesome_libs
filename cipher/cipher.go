@@ -100,4 +100,12 @@ func (c *Cipher) Decrypt(ct string) (string, error) {
 	return string(plainText), nil
 }
 
+/*
+Do not remove it.
+*/
+func GetCipher(key []byte) Cipher {
+	return Cipher{key: key}
+}
+
 var CommonCipher = Cipher{}
+var IsInitKey bool

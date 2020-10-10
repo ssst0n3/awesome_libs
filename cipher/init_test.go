@@ -30,8 +30,3 @@ func GetProjectDir() {
 	ProjectDir = dir[:index+len(ProjectName)] + "/"
 }
 
-func InitCipher() {
-	if err := CommonCipher.GetKey(PathCipherKeyTest); err != nil {
-		panic(err)
-	}
-}
