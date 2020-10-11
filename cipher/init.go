@@ -14,9 +14,11 @@ const (
 )
 
 func Init() {
+	log.Logger.Info("cipher start init.")
 	secret.InitDirSecret()
 	var err error
 	CommonCipher.key, IsInitKey, err = secret.LoadKey(FilenameCommonCipherKey)
+	log.Logger.Info("cipher.IsInitKey:", IsInitKey)
 	awesome_error.CheckFatal(err)
 	if IsInitKey {
 		log.Logger.Debug(HintInitData)
