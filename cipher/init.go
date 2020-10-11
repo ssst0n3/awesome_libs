@@ -14,8 +14,8 @@ const (
 )
 
 func Init() {
-	if len(CommonCipher.key) > 0 {
-		log.Logger.Info("cipher start init.")
+	if len(CommonCipher.key) == 0 {
+		log.Logger.Info()
 		secret.InitDirSecret()
 		var err error
 		CommonCipher.key, IsInitKey, err = secret.LoadKey(FilenameCommonCipherKey)
