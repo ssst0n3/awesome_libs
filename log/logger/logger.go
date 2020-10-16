@@ -1,17 +1,12 @@
-package log
+package logger
 
 import (
+	"fmt"
 	"github.com/sirupsen/logrus"
-	"os"
+	"io"
 )
 
-var Logger *logrus.Logger
-
-func init() {
-	Logger = InitLogger()
-}
-
-func InitLogger() *logrus.Logger {
+func InitLogger(name string, writer io.Writer) *logrus.Logger {
 	logger := logrus.New()
 	logger.SetReportCaller(true)
 	logger.SetFormatter(&logrus.TextFormatter{
@@ -20,10 +15,10 @@ func InitLogger() *logrus.Logger {
 
 	// Output to stdout instead of the default stderr
 	// Can be any io.Writer, see below for File example
-	logger.SetOutput(os.Stdout)
+	logger.SetOutput(writer)
 
 	// Only log the warning severity or above.
 	logger.SetLevel(logrus.InfoLevel)
-	logger.Info("awesome_libs's logger has been inited.")
+	logger.Info(fmt.Sprintf("%s's logger has been inited.", name))
 	return logger
 }

@@ -40,6 +40,6 @@ func TestCipher_Success(t *testing.T) {
 
 func TestCommonCipher(t *testing.T) {
 	assert.NoError(t, os.Setenv(consts.EnvDirSecret, "/tmp/secret"))
-	InitCipher()
+	Init()
 	assert.Equal(t, true, len(CommonCipher.key) > 0)
 }
