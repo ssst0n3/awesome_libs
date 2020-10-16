@@ -8,21 +8,22 @@ import (
 var Logger *logrus.Logger
 
 func init() {
-	InitLogger()
+	Logger = InitLogger()
 }
 
-func InitLogger() {
-	Logger = logrus.New()
-	Logger.SetReportCaller(true)
-	Logger.SetFormatter(&logrus.TextFormatter{
+func InitLogger() *logrus.Logger {
+	logger := logrus.New()
+	logger.SetReportCaller(true)
+	logger.SetFormatter(&logrus.TextFormatter{
 		ForceColors: true,
 	})
 
 	// Output to stdout instead of the default stderr
 	// Can be any io.Writer, see below for File example
-	Logger.SetOutput(os.Stdout)
+	logger.SetOutput(os.Stdout)
 
 	// Only log the warning severity or above.
-	Logger.SetLevel(logrus.InfoLevel)
-	Logger.Info("awesome_libs's logger has been inited.")
+	logger.SetLevel(logrus.InfoLevel)
+	logger.Info("awesome_libs's logger has been inited.")
+	return logger
 }
