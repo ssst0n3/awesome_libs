@@ -20,14 +20,14 @@ func example()  {
 ### use self-defined logger
 ```go
 import (
-    "github.com/ssst0n3/awesome_libs/awesome_error"
-    "github.com/ssst0n3/awesome_libs/awesome_error/error_logger"
+	"errors"
+	"github.com/ssst0n3/awesome_libs/log/logger"
+	"os"
 )
 
-func example()  {
-    l := logger.InitLogger("my-logger", os.Stdout)
-    error_logger.Init(l)
-    awesome_error.CheckError(errors.New("test"))
+func example() {
+	a := GetAwesomeError(logger.InitLogger("my-logger", os.Stdout))
+	a.CheckErr(errors.New("apple"))
 }
 ```
 

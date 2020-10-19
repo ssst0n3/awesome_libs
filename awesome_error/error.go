@@ -1,30 +1,24 @@
 package awesome_error
 
 import (
-	"github.com/pkg/errors"
-	"github.com/ssst0n3/awesome_libs/awesome_error/error_logger"
+	"github.com/ssst0n3/awesome_libs/awesome_error/exporter"
+	"github.com/ssst0n3/awesome_libs/log"
 )
 
+var Default = exporter.GetAwesomeError(log.Logger)
+
 func CheckDebug(err error) {
-	if err != nil {
-		error_logger.Logger.Debugf("%+v\n", errors.Errorf(err.Error()))
-	}
+	Default.CheckDebug(err)
 }
 
 func CheckErr(err error) {
-	if err != nil {
-		error_logger.Logger.Errorf("%+v\n", errors.Errorf(err.Error()))
-	}
+	Default.CheckErr(err)
 }
 
 func CheckWarning(err error) {
-	if err != nil {
-		error_logger.Logger.Warnf("%+v\n", errors.Errorf(err.Error()))
-	}
+	Default.CheckWarning(err)
 }
 
 func CheckFatal(err error) {
-	if err != nil {
-		error_logger.Logger.Fatalf("%+v\n", errors.Errorf(err.Error()))
-	}
+	Default.CheckFatal(err)
 }

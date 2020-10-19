@@ -19,6 +19,6 @@ func InitLogger(name string, writer io.Writer) *logrus.Logger {
 
 	// Only log the warning severity or above.
 	logger.SetLevel(logrus.InfoLevel)
-	logger.Info(fmt.Sprintf("%s's logger has been inited.", name))
+	logger.Debug(fmt.Sprintf("%s's logger has been inited.", name))
 	return logger
 }
