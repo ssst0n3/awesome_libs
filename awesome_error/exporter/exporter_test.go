@@ -18,5 +18,6 @@ func TestGetAwesomeError(t *testing.T) {
 }
 
 func ExampleGetAwesomeError() {
-	GetAwesomeError(logger.InitLogger("my-logger", os.Stdout))
+	ae := GetAwesomeError(logger.InitLogger("my-logger", os.Stdout))
+	ae.CheckErr(errors.New("apple"))
 }
