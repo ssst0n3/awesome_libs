@@ -5,6 +5,7 @@ import (
 	"errors"
 	"github.com/ssst0n3/awesome_libs/log/logger"
 	"github.com/stretchr/testify/assert"
+	"os"
 	"strings"
 	"testing"
 )
@@ -14,4 +15,8 @@ func TestGetAwesomeError(t *testing.T) {
 	a := GetAwesomeError(logger.InitLogger("my-logger", &out))
 	a.CheckErr(errors.New("apple"))
 	assert.Equal(t, true, strings.Contains(out.String(), "apple"))
+}
+
+func ExampleGetAwesomeError() {
+	GetAwesomeError(logger.InitLogger("my-logger", os.Stdout))
 }
