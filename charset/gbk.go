@@ -1,7 +1,8 @@
 package charset
 
 /*
-borrowed from https://studygolang.com/articles/24814
+borrowed from https://studygolang.com/articles/24814 but modified
+if the content only contains ascii but none gbk, return false
 */
 func DetectGBK(content []byte) (isGBK bool) {
 	for i := 0; i < len(content); {
@@ -14,11 +15,12 @@ func DetectGBK(content []byte) (isGBK bool) {
 			if 0x81 <= content[i] && content[i] <= 0xfe && len(content) > i+1 &&
 				0x40 <= content[i+1] && content[i+1] <= 0xfe && content[i+1] != 0xf7 {
 				i += 2
+				isGBK = true
 				continue
 			} else {
-				return
+				return false
 			}
 		}
 	}
-	return true
+	return
 }

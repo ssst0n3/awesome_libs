@@ -10,5 +10,5 @@ func TestDetectGBK(t *testing.T) {
 	assert.Equal(t, true, DetectGBK([]byte("是GBK")))
 	assert.Equal(t, false, DetectGBK([]byte("GBKではありません")))
 	assert.Equal(t, true, DetectGBK([]byte("\xaa\xbb")))
-	assert.Equal(t, true, DetectGBK([]byte("is_gbk")))
+	assert.Equal(t, false, DetectGBK([]byte("is_gbk")))
 }
