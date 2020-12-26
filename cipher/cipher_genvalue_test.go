@@ -14,9 +14,9 @@ func TestCipherEncrypt(t *testing.T) {
 	cipher := Cipher{
 		[]byte(key),
 	}
-	plainText := "qwxf{you_say_chick_beautiful?}"
-	plainText = ""
-	plainText = "user"
+	plainText := []byte("qwxf{you_say_chick_beautiful?}")
+	plainText = []byte("")
+	plainText = []byte("user")
 	cipherText, _ := cipher.Encrypt(plainText)
 	log.Logger.Info(cipherText)
 }

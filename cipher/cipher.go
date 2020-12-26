@@ -45,9 +45,9 @@ func (c *Cipher) GetKey(keyPath string) error {
 	return nil
 }
 
-func (c *Cipher) Encrypt(pt string) (string, error) {
+func (c *Cipher) Encrypt(plainText []byte) (string, error) {
 	c.MustKeyExists()
-	plainText := []byte(pt)
+	//plainText := []byte(pt)
 	nonce := make([]byte, 12)
 	_, err := io.ReadFull(rand.Reader, nonce)
 	if err != nil {
@@ -71,33 +71,33 @@ func (c *Cipher) Encrypt(pt string) (string, error) {
 	return hex.EncodeToString(append(nonce, cipherText...)), nil
 }
 
-func (c *Cipher) Decrypt(ct string) (string, error) {
+func (c *Cipher) Decrypt(ct string) ([]byte, error) {
 	c.MustKeyExists()
 	cipherText, err := hex.DecodeString(ct)
 	if err != nil {
 		awesome_error.CheckErr(err)
-		return "", err
+		return nil, err
 	}
 	nonce := cipherText[:12]
 	block, err := aes.NewCipher(c.key)
 	if err != nil {
 		awesome_error.CheckErr(err)
-		return "", err
+		return nil, err
 	}
 
 	aesGcm, err := cipher.NewGCM(block)
 	if err != nil {
 		awesome_error.CheckErr(err)
-		return "", err
+		return nil, err
 	}
 
 	plainText, err := aesGcm.Open(nil, nonce, cipherText[12:], nil)
 	if err != nil {
 		awesome_error.CheckErr(err)
-		return "", err
+		return nil, err
 	}
 
-	return string(plainText), nil
+	return plainText, nil
 }
 
 /*

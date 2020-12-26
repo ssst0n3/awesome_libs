@@ -25,7 +25,7 @@ func TestGetDirSecretFromEnv(t *testing.T) {
 func TestCreateDefaultSecretDir(t *testing.T) {
 	{
 		dir := "/tmp/secret"
-		assert.NoError(t, os.Remove(dir))
+		assert.NoError(t, os.RemoveAll(dir))
 		dirSecret := CreateDefaultSecretDir(dir)
 		assert.Equal(t, dir, dirSecret)
 	}

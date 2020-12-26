@@ -30,7 +30,7 @@ func TestCipher_GetKey(t *testing.T) {
 func TestCipher_Success(t *testing.T) {
 	cipher := Cipher{}
 	cipher.GetKey(PathCipherKeyTest)
-	plainText := "plain"
+	plainText := []byte("plain")
 	cipherText, err := cipher.Encrypt(plainText)
 	assert.NoError(t, err)
 	plain, err := cipher.Decrypt(cipherText)
