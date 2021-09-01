@@ -6,11 +6,10 @@ import (
 	"text/template"
 )
 
-var t = template.New("awesome_libs").Delims("{", "}")
-
 func Format(tpl string, arg Dict, delimiters ...string) string {
 	var msg bytes.Buffer
 
+	t := template.New("awesome_libs").Delims("{", "}")
 	if len(delimiters) == 2 {
 		left := delimiters[0]
 		right := delimiters[1]
