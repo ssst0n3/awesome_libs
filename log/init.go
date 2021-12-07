@@ -7,6 +7,7 @@ import (
 )
 
 var Logger *logrus.Logger
+var File *os.File
 
 func init() {
 	Logger = logger.InitLogger("awesome_libs", os.Stdout)
@@ -17,6 +18,11 @@ func Output2File(filename string) (err error) {
 	if err != nil {
 		return
 	}
+	File = file
 	Logger.Out = file
 	return
+}
+
+func CloseFile() error {
+	return File.Close()
 }
