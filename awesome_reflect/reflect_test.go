@@ -79,7 +79,9 @@ func TestValueByPtr(t *testing.T) {
 func TestFieldByJsonTag(t *testing.T) {
 	t.Run("struct", func(t *testing.T) {
 		field, find := FieldByJsonTag(
-			Value(struct {Name string `json:"name"`}{Name: "john"}),
+			Value(struct {
+				Name string `json:"name"`
+			}{Name: "john"}),
 			"name",
 		)
 		assert.Equal(t, true, find)
@@ -96,4 +98,22 @@ func TestFieldByJsonTag(t *testing.T) {
 		//assert.Equal(t, true, find)
 		//assert.Equal(t, Value("john").Interface(), field.Interface())
 	})
+}
+
+func TestEmptyPointerModel(t *testing.T) {
+	type model struct {
+		A string
+	}
+	m := model{}
+	assert.Equal(t, reflect.TypeOf(model{}), reflect.ValueOf(EmptyPointerOfModel(m)).Elem().Type())
+}
+
+
+func TestEmptyPointerSliceModel(t *testing.T) {
+	type model struct {
+		A string
+	}
+	m := model{}
+	sm := EmptyPointerOfSliceModel(m)
+	assert.Equal(t, reflect.TypeOf([]model{}), reflect.ValueOf(sm).Elem().Type())
 }
