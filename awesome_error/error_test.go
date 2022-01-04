@@ -5,6 +5,10 @@ import (
 	"testing"
 )
 
+func TestCheckDebug(t *testing.T) {
+	CheckDebug(errors.New("debug"))
+}
+
 func TestCheckErr(t *testing.T) {
-	CheckErr(errors.New("test"))
+	CheckErr(errors.New("error"))
 }
