@@ -5,7 +5,7 @@ import (
 	"github.com/ssst0n3/awesome_libs/log"
 )
 
-var Default = exporter.GetAwesomeError(log.Logger)
+var Default = exporter.GetAwesomeError(log.Logger, true)
 
 func CheckDebug(err error) {
 	Default.CheckDebug(err)
