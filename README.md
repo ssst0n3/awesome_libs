@@ -26,7 +26,7 @@ import (
 )
 
 func example() {
-	a := GetAwesomeError(logger.InitLogger("my-logger", os.Stdout))
+	a := GetAwesomeError(logger.InitLogger("my-logger", os.Stdout), true)
 	a.CheckErr(errors.New("apple"))
 }
 ```
