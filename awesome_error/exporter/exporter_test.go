@@ -12,12 +12,12 @@ import (
 
 func TestGetAwesomeError(t *testing.T) {
 	var out bytes.Buffer
-	a := GetAwesomeError(logger.InitLogger("my-logger", &out))
+	a := GetAwesomeError(logger.InitLogger("my-logger", &out), true)
 	a.CheckErr(errors.New("apple"))
 	assert.Equal(t, true, strings.Contains(out.String(), "apple"))
 }
 
 func ExampleGetAwesomeError() {
-	ae := GetAwesomeError(logger.InitLogger("my-logger", os.Stdout))
+	ae := GetAwesomeError(logger.InitLogger("my-logger", os.Stdout), true)
 	ae.CheckErr(errors.New("apple"))
 }
